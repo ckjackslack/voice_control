@@ -7,6 +7,7 @@ from dataclasses import (
 )
 from enum import Enum, auto
 
+import sounddevice
 import speech_recognition as sr
 
 
