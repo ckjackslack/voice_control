@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voice-control"
+version = "0.2.0"
+description = "Control an application with spoken (or typed) commands matched against decorated handler methods."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "ckjackslack" }]
+dependencies = []
+
+[project.optional-dependencies]
+# Real microphone input. SpeechRecognition talks to the recognizers, PyAudio opens
+# the microphone. Needs PortAudio headers/libraries on the system to build PyAudio.
+mic = ["SpeechRecognition>=3.10", "PyAudio>=0.2.14"]
+# Offline recognition engine (CMU Sphinx) for the "sphinx" backend.
+sphinx = ["SpeechRecognition>=3.10", "PyAudio>=0.2.14", "pocketsphinx>=5"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+voice-control = "voice_control.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
