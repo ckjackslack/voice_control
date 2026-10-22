@@ -97,7 +97,10 @@ class History:
         return cls([HistoryEntry.from_dict(item) for item in items])
 
     def save(self, path: str | Path) -> None:
-        Path(path).write_text(self.to_json() + "\n", encoding="utf-8")
+        try:
+            Path(path).write_text(self.to_json() + "\n", encoding="utf-8")
+        except OSError as exc:
+            raise HistoryError(f"cannot write history file {str(path)!r}: {exc.strerror}") from exc
 
     @classmethod
     def load(cls, path: str | Path) -> "History":
