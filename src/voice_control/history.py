@@ -45,7 +45,9 @@ class HistoryEntry:
             raise HistoryError(f"history entry must be an object, got {type(data).__name__}")
         try:
             name = data["command"]
-            args = data.get("args", {}) or {}
+            args = data.get("args")
+            if args is None:
+                args = {}
             text = data.get("text", name)
             ts = _dt.datetime.fromisoformat(data["timestamp"])
         except (KeyError, TypeError, ValueError) as exc:
